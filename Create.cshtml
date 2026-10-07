@@ -1,0 +1,16 @@
+@model Opportunity
+@{ ViewData["Title"] = "Create Opportunity"; }
+@{ var userNames = (Dictionary<string, string>)ViewBag.UserNames; string UN(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : "-"; }
+<h2>Create Opportunity</h2>
+<form asp-action="Create" method="post" class="row g-3" style="max-width:800px" novalidate>
+  <partial name="_Form" model="Model" />
+  <div class="col-12"><button class="btn btn-primary" type="submit">Create</button> <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a></div>
+</form>
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+$.validator.addMethod('activeclose', function (v) { var s = $('#Stage').val(); if (!v || s === 'Won' || s === 'Lost') return true; return v >= new Date().toLocaleDateString('en-CA'); });
+$.validator.unobtrusive.adapters.addBool('activeclose');
+$('#Stage').on('change', function () { $('#ExpectedCloseDate').valid(); });
+</script>
+}

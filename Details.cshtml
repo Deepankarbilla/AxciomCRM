@@ -1,0 +1,19 @@
+@model Opportunity
+@{ ViewData["Title"] = "Opportunity Details"; }
+@{ var userNames = (Dictionary<string, string>)ViewBag.UserNames; string UN(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : "-"; }
+<h2>Opportunity Details</h2>
+<dl class="row bg-white p-3 rounded shadow-sm">
+<dt class="col-sm-3">Name</dt><dd class="col-sm-9">@(Model.OpportunityName)</dd>
+<dt class="col-sm-3">Customer</dt><dd class="col-sm-9">@(Model.Customer?.CustomerName)</dd>
+<dt class="col-sm-3">Stage</dt><dd class="col-sm-9">@(Model.Stage)</dd>
+<dt class="col-sm-3">Status</dt><dd class="col-sm-9">@(Model.Status)</dd>
+<dt class="col-sm-3">Amount</dt><dd class="col-sm-9">@(Model.Amount.ToString("N2"))</dd>
+<dt class="col-sm-3">Probability</dt><dd class="col-sm-9">@(Model.Probability + "%")</dd>
+<dt class="col-sm-3">Weighted</dt><dd class="col-sm-9">@((Model.Amount * Model.Probability / 100).ToString("N2"))</dd>
+<dt class="col-sm-3">Expected Close</dt><dd class="col-sm-9">@(Model.ExpectedCloseDate.ToString("dd MMM yyyy"))</dd>
+<dt class="col-sm-3">Owner</dt><dd class="col-sm-9">@(UN(Model.AssignedTo))</dd>
+<dt class="col-sm-3">Created</dt><dd class="col-sm-9">@(Model.CreatedDate.ToString("dd MMM yyyy"))</dd>
+</dl>
+
+<a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.OpportunityId">Edit</a>
+<a class="btn btn-outline-secondary" asp-action="Index">Back</a>

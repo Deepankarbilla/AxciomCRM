@@ -1,0 +1,14 @@
+@model Opportunity
+<div asp-validation-summary="All" class="alert alert-danger col-12" role="alert"></div>
+<input type="hidden" asp-for="OpportunityId" />
+  <div class="col-md-6"><label asp-for="OpportunityName" class="form-label">Opportunity Name</label><input asp-for="OpportunityName" type="text" class="form-control" maxlength="150" /><span asp-validation-for="OpportunityName" class="text-danger"></span></div>
+  <div class="col-md-6"><label asp-for="CustomerId" class="form-label">Customer</label><select asp-for="CustomerId" asp-items="@((IEnumerable<SelectListItem>)ViewBag.Customers)" class="form-select"><option value="0">-- Select --</option></select><span asp-validation-for="CustomerId" class="text-danger"></span></div>
+  <div class="col-md-6"><label asp-for="Amount" class="form-label">Amount</label><input asp-for="Amount" type="number" class="form-control" step="0.01" min="0" /><span asp-validation-for="Amount" class="text-danger"></span></div>
+  <div class="col-md-6"><label asp-for="Stage" class="form-label">Stage</label><select asp-for="Stage" asp-items="@((IEnumerable<SelectListItem>)ViewBag.StageList)" class="form-select"></select><span asp-validation-for="Stage" class="text-danger"></span></div>
+  <div class="col-md-6"><label asp-for="Probability" class="form-label">Probability (%)</label><input asp-for="Probability" type="number" class="form-control" min="0" max="100" /><span asp-validation-for="Probability" class="text-danger"></span></div>
+  <div class="col-md-6"><label asp-for="ExpectedCloseDate" class="form-label">Expected Close Date</label><input asp-for="ExpectedCloseDate" type="date" class="form-control" data-val-activeclose="Expected Close Date cannot be in the past." /><span asp-validation-for="ExpectedCloseDate" class="text-danger"></span></div>
+@if (!User.IsInRole("SalesExecutive")) {
+  <div class="col-md-6"><label asp-for="AssignedTo" class="form-label">Assigned To</label>
+  <select asp-for="AssignedTo" asp-items="@((IEnumerable<SelectListItem>)ViewBag.Users)" class="form-select"><option value="">-- Me --</option></select>
+  <span asp-validation-for="AssignedTo" class="text-danger"></span></div>
+}
